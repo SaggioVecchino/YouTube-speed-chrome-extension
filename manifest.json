@@ -1,0 +1,24 @@
+{
+  "name": "YouTube speed",
+  "version": "1.0",
+  "description": "Gain time by speeding up YouTube videos !",
+  "manifest_version": 2,
+  "page_action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "http://www.youtube.com/*",
+    "https://www.youtube.com/*",
+    "activeTab",
+    "storage",
+    "declarativeContent",
+    "tabs"
+  ],
+  "icons": {
+    "128": "images/128.png"
+  }
+}

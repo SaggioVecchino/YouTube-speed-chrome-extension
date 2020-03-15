@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      html,
+      body,
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        width: 230px;
+        text-align: center;
+      }
+      #inp {
+        width: 100px;
+        margin: 0 5px 0 0;
+      }
+      #submitBtn {
+        width: 45px;
+        margin: 5px 0;
+      }
+      #defaultSpeedBtn {
+        width: 150px;
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Current speed is x<span id="speed">1</span></h3>
+    <h4>Choose the speed you want:</h4>
+    <form autocomplete="off">
+      <input id="inp" type="number" placeholder="Speed factor" />
+      <button id="submitBtn" type="submit">Enter</button>
+    </form>
+    <button id="defaultSpeedBtn">Watch with normal speed</button>
+    <script src="popup.js"></script>
+  </body>
+</html>
