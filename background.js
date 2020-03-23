@@ -36,7 +36,10 @@ chrome.runtime.onInstalled.addListener(function() {
 });
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  if (/^(https?:\/\/(www\.)?)?youtube\.com\/watch/.test(tab.url)) {
+  if (
+    changeInfo.status === "complete" &&
+    /^(https?:\/\/(www\.)?)?youtube\.com\/watch/.test(tab.url)
+  ) {
     changeSpeed(1, tabId);
     persist(1, tabId);
   }
