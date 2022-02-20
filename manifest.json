@@ -1,6 +1,6 @@
 {
   "name": "YouTube speed",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Gain time by speeding up YouTube videos !",
   "manifest_version": 2,
   "page_action": {

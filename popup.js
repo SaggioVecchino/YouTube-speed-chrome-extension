@@ -1,5 +1,23 @@
+persist = function (value, tabId) {
+  chrome.storage.sync.get(["currentSpeed"], function (res) {
+    let newCurrentSpeed = {};
+    newCurrentSpeed[tabId] = value;
+    let newState = { ...res.currentSpeed, ...newCurrentSpeed };
+    chrome.storage.sync.set({ currentSpeed: newState }, function () {});
+  });
+};
+
+changeSpeed = function (value, tabId) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function () {
+    chrome.tabs.executeScript(tabId, {
+      code:
+        'document.querySelector("#movie_player > div.html5-video-container > video").playbackRate = ' +
+        value,
+    });
+  });
+};
+
 const inp = document.querySelector("#inp");
-const submitBtn = document.querySelector("#submitBtn");
 const form = document.querySelector("form");
 const speedSpan = document.querySelector("#speed");
 const defaultSpeedBtn = document.querySelector("#defaultSpeedBtn");
@@ -13,30 +31,14 @@ inp.setAttribute("step", STEP);
 
 var tabId;
 
-chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
   tabId = tabs[0].id;
 });
 
-persist = function(value, tabId) {
-  chrome.storage.sync.get(["currentSpeed"], function(res) {
-    let newCurrentSpeed = {};
-    newCurrentSpeed[tabId] = value;
-    let newState = { ...res.currentSpeed, ...newCurrentSpeed };
-    chrome.storage.sync.set({ currentSpeed: newState }, function() {});
-  });
-};
-
-changeSpeed = function(value, tabId) {
-  chrome.tabs.query({ active: true, currentWindow: true }, function() {
-    chrome.tabs.executeScript(tabId, {
-      code: 'document.querySelector("video").playbackRate = ' + value
-    });
-  });
-};
-
 function update(value = null) {
+  console.log("popup.js update");
   if (value === null) {
-    chrome.storage.sync.get(["currentSpeed"], function(res) {
+    chrome.storage.sync.get(["currentSpeed"], function (res) {
       if (!res.currentSpeed.hasOwnProperty(tabId)) {
         changeSpeed(1, tabId);
         persist(1, tabId);
@@ -62,6 +64,7 @@ form.addEventListener("submit", submitSpeed);
 
 function submitSpeed(event) {
   event.preventDefault();
+  console.log("popup.js submit speed");
   if (!isNaN(inp.value)) {
     let value = Number(inp.value);
     value = value > MIN ? value : MIN;
@@ -70,7 +73,8 @@ function submitSpeed(event) {
   }
 }
 
-defaultSpeedBtn.addEventListener("click", function() {
+defaultSpeedBtn.addEventListener("click", function () {
+  console.log("popup.js default speed to 1");
   changeSpeed(1, tabId);
   update(1);
 });
